@@ -5,11 +5,11 @@
   "Content": {
     "RootDirectory": "assets"
   },
+  "IsFixedTimeStep": true,
   "IsMouseVisible": false,
   "Level": {
     "MapLayerDepth": 1.0
   },
-  "Maps": [],
   "Renderer": {
     "ClearColor": "#ff00ff",
     "BlendState": "NonPremultiplied",
