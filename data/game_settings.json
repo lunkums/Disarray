@@ -1,0 +1,24 @@
+{
+  "Camera": {
+    "ViewportAdapterType": "Window"
+  },
+  "Content": {
+    "RootDirectory": "assets"
+  },
+  "IsMouseVisible": false,
+  "Level": {
+    "MapLayerDepth": 1.0
+  },
+  "Maps": [],
+  "Renderer": {
+    "ClearColor": "#ff00ff",
+    "BlendState": "NonPremultiplied",
+    "DepthStencilState": "None",
+    "RasterizerState": "CullNone",
+    "SamplerState": "PointClamp",
+    "SpriteSortMode": "BackToFront"
+  },
+  "Window": {
+    "AllowUserResizing": false
+  }
+}

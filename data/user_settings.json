@@ -1,0 +1,25 @@
+{
+  "Graphics": {
+    "IsFullScreen": false,
+    "PreferredBackBufferWidth": 1024,
+    "PreferredBackBufferHeight": 1024
+  },
+  "Input": {
+    "GamePadSupported": false,
+    "KeyboardController": {
+      "ActionMap": {
+        "MoveUp": "W",
+        "MoveDown": "S",
+        "MoveLeft": "A",
+        "MoveRight": "D",
+        "GameExit": "Escape"
+      }
+    },
+    "MouseController": {
+      "ActionMap": {
+        "Resize": "LeftMouseButton",
+        "Aim": "RightMouseButton"
+      }
+    }
+  }
+}
