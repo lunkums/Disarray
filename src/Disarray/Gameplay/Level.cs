@@ -6,12 +6,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Disarray.Gameplay;
 
-public class Level
+public class Level : ILevel
 {
     private Main main;
     private ISystem<float> updateSystems;
     private ISystem<SpriteBatch> drawSystems;
 
+    // Add additional properties here and serialize their values in data/game_settings.json
     public float MapLayerDepth { get; set; }
 
     public void Initialize(Main main)
@@ -47,8 +48,10 @@ public class Level
         player.Set<Player>(new());
     }
 
-    public void Update(float delta)
+    public void Update(GameTime gameTime)
     {
+        float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
         /*
          * Add your update logic here
          */

@@ -10,7 +10,9 @@ public class Main : Game
 {
     public Main() : base()
     {
-        Graphics = new GraphicsDeviceManager(this);
+        // The graphics device manager is necessary for the creation of some components; wait to serialize the game
+        // until after its creation, which can be trigger by invoking "ApplyChanges()" (totally not a hack)
+        Graphics = new(this);
         Graphics.ApplyChanges();
 
         Data.InitializeConverters(this);
@@ -21,8 +23,6 @@ public class Main : Game
         Physics = new();
         Input = new();
         Level = new();
-
-        Disposed += DisposeAdditional;
     }
 
     // Engine components and global data
@@ -36,13 +36,13 @@ public class Main : Game
 
     // Model view projection matrices
     public Matrix Model => Matrix.Identity;
-    public Matrix View => Camera.GetViewMatrix();
+    public Matrix View => Camera.GetViewMatrix(Vector2.Zero);
     public Matrix Projection => Matrix.CreateOrthographicOffCenter(0, GraphicsDevice.Viewport.Width,
         GraphicsDevice.Viewport.Height, 0, 0, -1);
 
     protected override void Initialize()
     {
-        // Apply the systems and game settings
+        // Apply the user's settings
         Data.ApplyUserSettings(this);
 
         // Initialize the engine after applying settings
@@ -61,11 +61,9 @@ public class Main : Game
 
     protected override void Update(GameTime gameTime)
     {
-        float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
         Input.Update(IsActive);
-        Physics.Update(delta);
-        Level.Update(delta);
+        Physics.Update(gameTime);
+        Level.Update(gameTime);
         base.Update(gameTime);
     }
 
@@ -75,20 +73,13 @@ public class Main : Game
         base.Draw(gameTime);
     }
 
-    /// <summary>
-    /// Dispose additional resources.
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void DisposeAdditional(object? sender, EventArgs e)
+    protected override void Dispose(bool disposing)
     {
         Input.Dispose();
 
-        // Try to dispose the level
-        var disposableLevel = Level as IDisposable;
-        if (disposableLevel != null)
-        {
-            disposableLevel.Dispose();
-        }
+        // Level should implement IDisposable if you want to manually clean up its resources
+        (Level as IDisposable)?.Dispose();
+
+        base.Dispose(disposing);
     }
 }

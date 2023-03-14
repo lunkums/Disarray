@@ -11,7 +11,7 @@ public class Renderer
     private ISystem<SpriteBatch> spriteSystems;
     private SpriteBatch spriteBatch;
 
-    public Color ClearColor { get; set; } = Color.White;
+    public Color ClearColor { get; set; } = Color.CornflowerBlue;
     public SpriteSortMode SpriteSortMode { get; set; }
     public BlendState BlendState { get; set; }
     public SamplerState SamplerState { get; set; }

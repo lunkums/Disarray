@@ -17,8 +17,10 @@ public class Physics
             );
     }
 
-    public void Update(float delta)
+    public void Update(GameTime gameTime)
     {
+        float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
         physicsSystems.Update(delta);
     }
 }
