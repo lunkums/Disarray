@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Disarray</RootNamespace>
+        <Platforms>AnyCPU;x64</Platforms>
+        <OutputType>WinExe</OutputType>
+    </PropertyGroup>
+
+
+    <ItemGroup>
+        <ProjectReference Include="..\FNA\FNA.csproj" />
+    </ItemGroup>
+
+    <!-- Copy data to the output dir -->
+    <ItemGroup>
+        <None Include="../../data/**/*.*">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Link>data/%(RecursiveDir)%(Filename)%(Extension)</Link>
+        </None>
+    </ItemGroup>
+
+    <!-- Copy assets to the output dir -->
+    <ItemGroup>
+        <None Include="../../assets/**/*.*">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Link>assets/%(RecursiveDir)%(Filename)%(Extension)</Link>
+        </None>
+    </ItemGroup>
+
+    <!-- Copy external libs to the output dir -->
+    <ItemGroup>
+        <None Include="../../lib/**/*.*">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Link>lib/%(RecursiveDir)%(Filename)%(Extension)</Link>
+			<TargetPath>%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
+        </None>
+    </ItemGroup>
+
+</Project>
