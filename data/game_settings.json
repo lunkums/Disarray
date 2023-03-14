@@ -1,14 +1,20 @@
 {
   "Camera": {
-    "ViewportAdapterType": "Window"
+    "ViewportAdapterType": "Boxing",
+    "ViewportParameters": {
+      "VirtualWidth": 192,
+      "VirtualHeight": 128
+    }
   },
   "Content": {
     "RootDirectory": "assets"
   },
   "IsFixedTimeStep": true,
-  "IsMouseVisible": false,
+  "IsMouseVisible": true,
   "Level": {
-    "MapLayerDepth": 0.5
+    "TilemapLayerDepth": 1.0,
+    "TilemapDirectory": "levels",
+    "Tilemap": "cavernasMap.tmx"
   },
   "Renderer": {
     "ClearColor": "#ff00ff",

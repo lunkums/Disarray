@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FNA", "src\FNA\FNA.csproj",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoGame.Extended", "src\MonoGame.Extended\src\cs\MonoGame.Extended\MonoGame.Extended.csproj", "{5A96410A-15D5-41C5-8150-7F708227014A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TiledCS", "src\TiledCS\src\TiledCS.csproj", "{9BCB0017-3982-4B93-A54A-F94050113BCF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{5A96410A-15D5-41C5-8150-7F708227014A}.Release|x64.Build.0 = Release|Any CPU
 		{5A96410A-15D5-41C5-8150-7F708227014A}.Release|x86.ActiveCfg = Release|Any CPU
 		{5A96410A-15D5-41C5-8150-7F708227014A}.Release|x86.Build.0 = Release|Any CPU
+		{9BCB0017-3982-4B93-A54A-F94050113BCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BCB0017-3982-4B93-A54A-F94050113BCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BCB0017-3982-4B93-A54A-F94050113BCF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9BCB0017-3982-4B93-A54A-F94050113BCF}.Debug|x64.Build.0 = Debug|Any CPU
+		{9BCB0017-3982-4B93-A54A-F94050113BCF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9BCB0017-3982-4B93-A54A-F94050113BCF}.Debug|x86.Build.0 = Debug|Any CPU
+		{9BCB0017-3982-4B93-A54A-F94050113BCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BCB0017-3982-4B93-A54A-F94050113BCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BCB0017-3982-4B93-A54A-F94050113BCF}.Release|x64.ActiveCfg = Release|Any CPU
+		{9BCB0017-3982-4B93-A54A-F94050113BCF}.Release|x64.Build.0 = Release|Any CPU
+		{9BCB0017-3982-4B93-A54A-F94050113BCF}.Release|x86.ActiveCfg = Release|Any CPU
+		{9BCB0017-3982-4B93-A54A-F94050113BCF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

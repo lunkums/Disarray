@@ -17,21 +17,25 @@ public class Main : Game
 
         Data.InitializeConverters(this);
 
-        World = new();
+        Assets = new();
         Camera = new(GraphicsDevice);
-        Renderer = new();
-        Physics = new();
         Input = new();
+        Physics = new();
+        Renderer = new();
+        World = new();
         Level = LevelFactory.Create();
     }
 
+    public event Action ResolutionChanged;
+
     // Engine components and global data
-    public GraphicsDeviceManager Graphics { get; init; }
-    public World World { get; init; }
+    public Assets Assets { get; init; }
     public OrthographicCamera Camera { get; init; }
-    public Renderer Renderer { get; init; }
-    public Physics Physics { get; init; }
+    public GraphicsDeviceManager Graphics { get; init; }
     public Input Input { get; init; }
+    public Physics Physics { get; init; }
+    public Renderer Renderer { get; init; }
+    public World World { get; init; }
     public ILevel Level { get; set; }
 
     // Model view projection matrices
@@ -40,12 +44,26 @@ public class Main : Game
     public Matrix Projection => Matrix.CreateOrthographicOffCenter(0, GraphicsDevice.Viewport.Width,
         GraphicsDevice.Viewport.Height, 0, 0, -1);
 
+    /// <summary>
+    /// Set the resolution of the window to the given values.
+    /// </summary>
+    /// <param name="width">The new width of the window.</param>
+    /// <param name="height">The new height of the window.</param>
+    public void SetResolution(int width, int height)
+    {
+        Graphics.PreferredBackBufferWidth = width;
+        Graphics.PreferredBackBufferHeight = height;
+        Graphics.ApplyChanges();
+        ResolutionChanged?.Invoke();
+    }
+
     protected override void Initialize()
     {
         // Apply the user's settings
         Data.ApplyUserSettings(this);
 
         // Initialize the engine after applying settings
+        Assets.Initialize(this);
         Level.Initialize(this);
         Renderer.Initialize(this);
         Physics.Initialize(this);

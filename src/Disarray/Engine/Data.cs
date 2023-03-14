@@ -93,7 +93,7 @@ public static class Data
         game.Graphics.ApplyChanges();
     }
 
-    private static string ReadTextFromRelativeFile(string relativeFilePath)
+    public static string ReadTextFromRelativeFile(string relativeFilePath)
     {
         return File.ReadAllText(Path.Combine(DataDirectoryPath, relativeFilePath));
     }

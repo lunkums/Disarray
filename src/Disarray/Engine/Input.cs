@@ -28,7 +28,11 @@ public sealed class Input : IDisposable
     }
 
     public MouseController MouseController { get; private set; }
+    public Point MousePoint => MouseController.Point;
+    public Vector2 MousePosition => MouseController.Position;
+
     public KeyboardController KeyboardController { get; private set; }
+
     public GamePadController GamePadController { get; private set; }
     public bool GamePadSupported { get; private set; }
 

@@ -50,12 +50,11 @@ public class PlayerSystem : AEntitySetSystem<float>
         }
         if (Input.IsActionPressed("ResizeH"))
         {
-            Main.Graphics.PreferredBackBufferWidth += 128;
-            Main.Graphics.ApplyChanges();
+            Debug.WriteLine(Main.Camera.ScreenToWorld(Main.Input.MousePosition));
         }
         if (Input.IsActionPressed("ResizeV"))
         {
-            Main.Graphics.PreferredBackBufferHeight += 128;
+            Main.SetResolution(128, 128);
             Main.Graphics.ApplyChanges();
         }
 

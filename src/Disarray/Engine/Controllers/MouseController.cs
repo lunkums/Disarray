@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
 
@@ -13,6 +14,9 @@ public class MouseController : Controller<MouseState, MouseController.MouseButto
         SideMouseButton1,
         SideMouseButton2
     }
+
+    public Point Point => new(CurrentState.X, CurrentState.Y);
+    public Vector2 Position => new(CurrentState.X, CurrentState.Y);
 
     public bool IsButtonUp(MouseButton button)
     {

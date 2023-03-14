@@ -1,8 +1,8 @@
 {
   "Graphics": {
     "IsFullScreen": false,
-    "PreferredBackBufferWidth": 1024,
-    "PreferredBackBufferHeight": 1024
+    "PreferredBackBufferWidth": 1920,
+    "PreferredBackBufferHeight": 1280
   },
   "Input": {
     "GamePadSupported": false,

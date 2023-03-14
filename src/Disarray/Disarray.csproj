@@ -18,6 +18,10 @@
 		<ProjectReference Include="..\MonoGame.Extended\src\cs\MonoGame.Extended\MonoGame.Extended.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<ProjectReference Include="..\TiledCS\src\TiledCS.csproj" />
+	</ItemGroup>
+
     <!-- Copy data to the output dir -->
     <ItemGroup>
         <None Include="../../data/**/*.*">
