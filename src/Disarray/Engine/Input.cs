@@ -114,7 +114,7 @@ public sealed class Input : IDisposable
             case 2:
                 return PlayerIndex.Three;
             case 3:
-                return PlayerIndex.One;
+                return PlayerIndex.Four;
             default:
                 throw new Exception("Invalid player index specified");
         }
