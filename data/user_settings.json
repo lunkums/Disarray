@@ -17,8 +17,8 @@
     },
     "MouseController": {
       "ActionMap": {
-        "Resize": "LeftMouseButton",
-        "Aim": "RightMouseButton"
+        "ResizeH": "LeftMouseButton",
+        "ResizeV": "RightMouseButton"
       }
     }
   }

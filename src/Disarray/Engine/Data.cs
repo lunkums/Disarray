@@ -1,4 +1,5 @@
 using Disarray.Engine.Serialization;
+using Disarray.Gameplay.Levels;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended.Serialization;
 using Newtonsoft.Json;
@@ -27,12 +28,25 @@ public static class Data
             new RasterizerStateConverter(),
             new SamplerStateConverter(),
             new ColorJsonConverter(),
-            new OrthographicCameraConverter()
+            new OrthographicCameraConverter(),
+            LevelFactory.LevelJsonConverter
         };
         GlobalSerializerSettings = new JsonSerializerSettings()
         {
             Converters = GlobalConverters
         };
+    }
+
+    public static void OverrideLevelConverter<T>(LevelJsonConverter<T> jsonConverter) where T : ILevel
+    {
+        for (int i = 0; i < GlobalConverters.Length; i++)
+        {
+            if (GlobalConverters[i] is ILevelConverter)
+            {
+                GlobalConverters[i] = jsonConverter;
+                return;
+            }
+        }
     }
 
     /// <summary>

@@ -8,7 +8,7 @@
   "IsFixedTimeStep": true,
   "IsMouseVisible": false,
   "Level": {
-    "MapLayerDepth": 1.0
+    "MapLayerDepth": 0.5
   },
   "Renderer": {
     "ClearColor": "#ff00ff",

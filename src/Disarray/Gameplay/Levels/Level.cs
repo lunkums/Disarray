@@ -4,7 +4,7 @@ using Disarray.Engine.Components;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Disarray.Gameplay;
+namespace Disarray.Gameplay.Levels;
 
 public class Level : ILevel
 {
@@ -19,19 +19,17 @@ public class Level : ILevel
     {
         this.main = main;
 
+        // Add your custom systems here (and define new components wherever you want)
         updateSystems = new SequentialSystem<float>(
             new PlayerSystem(main)
             );
         drawSystems = new SequentialSystem<SpriteBatch>(
-            // Add draw systems here, if any
             );
     }
 
     public void LoadContent()
     {
-        /*
-         * Create your entities here 
-         */
+        // Create your entities here
         Entity player = main.World.CreateEntity();
 
         player.Set<Transform>(new());
@@ -52,17 +50,13 @@ public class Level : ILevel
     {
         float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-        /*
-         * Add your update logic here
-         */
+        // Add your update logic here
         updateSystems.Update(delta);
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        /*
-         * Add your draw logic here
-         */
+        // Add your draw logic here
         drawSystems.Update(spriteBatch);
     }
 }

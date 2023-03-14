@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Disarray.Gameplay;
+namespace Disarray.Gameplay.Levels;
 
 /// <summary>
 /// An interface that describes a game level. Inherit this to create different levels with distinct gameplay logic.

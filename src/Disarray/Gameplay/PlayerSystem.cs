@@ -48,10 +48,14 @@ public class PlayerSystem : AEntitySetSystem<float>
         {
             direction += Vector2.UnitX;
         }
-        if (Input.IsActionPressed("Resize"))
+        if (Input.IsActionPressed("ResizeH"))
+        {
+            Main.Graphics.PreferredBackBufferWidth += 128;
+            Main.Graphics.ApplyChanges();
+        }
+        if (Input.IsActionPressed("ResizeV"))
         {
             Main.Graphics.PreferredBackBufferHeight += 128;
-            Main.Graphics.PreferredBackBufferWidth += 128;
             Main.Graphics.ApplyChanges();
         }
 

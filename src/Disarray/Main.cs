@@ -1,6 +1,6 @@
 ﻿using DefaultEcs;
 using Disarray.Engine;
-using Disarray.Gameplay;
+using Disarray.Gameplay.Levels;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 
@@ -22,7 +22,7 @@ public class Main : Game
         Renderer = new();
         Physics = new();
         Input = new();
-        Level = new();
+        Level = LevelFactory.Create();
     }
 
     // Engine components and global data
@@ -32,7 +32,7 @@ public class Main : Game
     public Renderer Renderer { get; init; }
     public Physics Physics { get; init; }
     public Input Input { get; init; }
-    public Level Level { get; init; }
+    public ILevel Level { get; set; }
 
     // Model view projection matrices
     public Matrix Model => Matrix.Identity;
