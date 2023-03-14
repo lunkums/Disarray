@@ -1,0 +1,6 @@
+[submodule "src/MonoGame.Extended"]
+	path = src/MonoGame.Extended
+	url = https://github.com/craftworkgames/MonoGame.Extended.git
+[submodule "src/FNA"]
+	path = src/FNA
+	url = https://github.com/FNA-XNA/FNA.git

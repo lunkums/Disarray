@@ -13,6 +13,10 @@
     <ItemGroup>
         <ProjectReference Include="..\FNA\FNA.csproj" />
     </ItemGroup>
+	
+	<ItemGroup>
+		<ProjectReference Include="..\MonoGame.Extended\src\cs\MonoGame.Extended\MonoGame.Extended.csproj" />
+	</ItemGroup>
 
     <!-- Copy data to the output dir -->
     <ItemGroup>
@@ -37,6 +41,9 @@
             <Link>lib/%(RecursiveDir)%(Filename)%(Extension)</Link>
 			<TargetPath>%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
         </None>
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="DefaultEcs" Version="0.17.2" />
     </ItemGroup>
 
 </Project>

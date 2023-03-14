@@ -1,4 +1,6 @@
-﻿namespace Disarray;
+﻿using Disarray.Engine;
+
+namespace Disarray;
 
 
 class Program
@@ -6,7 +8,7 @@ class Program
     [STAThread]
     static void Main(string[] args)
     {
-        using (Game1 game = new Game1())
+        using (Main game = Data.LoadFromFilePath<Main>("game_settings.json"))
         {
             game.Run();
         }
