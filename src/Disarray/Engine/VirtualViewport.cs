@@ -137,7 +137,7 @@ public class VirtualViewport
     }
 
     /// <summary>
-    /// Queue a resize trigger if the client size or resolution changes.
+    /// Resize the render texture if the resolution changes.
     /// </summary>
     /// <param name="sender">The sender of the event.</param>
     /// <param name="e">The event args.</param>

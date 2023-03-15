@@ -4,6 +4,9 @@ using Microsoft.Xna.Framework;
 
 namespace Disarray.Engine;
 
+/// <summary>
+/// Handle the physics of the game including the integration of bodies and the detection and resolution of collisions.
+/// </summary>
 public class Physics
 {
     private ISystem<float> physicsSystems;
@@ -13,7 +16,7 @@ public class Physics
     public void Initialize(Main game)
     {
         physicsSystems = new SequentialSystem<float>(
-            new VerletSystem(game.World, this)
+            new VerletIntegration(game.World, this)
             );
     }
 

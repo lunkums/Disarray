@@ -1,16 +1,13 @@
 using Disarray.Engine.Serialization;
 using Disarray.Gameplay.Levels;
-using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 
 namespace Disarray.Engine;
 
 /// <summary>
-/// A utility class to apply settings changes to the engine.
+/// Manages settings, file I/O, and serialization for the game.
 /// </summary>
 public static class Data
 {
@@ -44,6 +41,11 @@ public static class Data
         };
     }
 
+    /// <summary>
+    /// Provide a custom JSON converter with which to serialize the level.
+    /// </summary>
+    /// <typeparam name="T">The type of the level to serialize.</typeparam>
+    /// <param name="jsonConverter">The new level converter.</param>
     public static void OverrideLevelConverter<T>(LevelJsonConverter<T> jsonConverter) where T : ILevel
     {
         for (int i = 0; i < GlobalConverters.Length; i++)
@@ -66,6 +68,13 @@ public static class Data
         Main.Exiting += OnGameExiting;
     }
 
+    /// <summary>
+    /// Load the JSON file into an object of type <typeparamref name="T"/>.
+    /// </summary>
+    /// <typeparam name="T">The type of object to deserialize the file as.</typeparam>
+    /// <param name="filePath">The path to the file, including the file name with its extension.</param>
+    /// <param name="relativeToDataDir">Whether the the given <paramref name="filePath"/> is relative to the data directory.</param>
+    /// <returns></returns>
     public static T LoadFromFilePath<T>(string filePath, bool relativeToDataDir = true)
     {
         string jsonBlob;
@@ -93,11 +102,19 @@ public static class Data
         game.Graphics.ApplyChanges();
     }
 
+    /// <summary>
+    /// Read all text from the path of the file relative to the data directory.
+    /// </summary>
+    /// <param name="relativeFilePath">The file path relative to the data directory.</param>
+    /// <returns>The raw contents of the file.</returns>
     public static string ReadTextFromRelativeFile(string relativeFilePath)
     {
         return File.ReadAllText(Path.Combine(DataDirectoryPath, relativeFilePath));
     }
 
+    /// <summary>
+    /// Serialize the main game instance to JSON and save that to the user settings file.
+    /// </summary>
     public static void SaveUserSettings()
     {
         string userSettings;

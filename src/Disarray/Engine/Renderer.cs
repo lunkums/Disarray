@@ -5,6 +5,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Disarray.Engine;
 
+/// <summary>
+/// Handles the game's rendering systems by drawing the scene to a virtual viewport, then drawing the virtual viewport
+/// to the screen.
+/// </summary>
 public class Renderer
 {
     private Main main;
@@ -39,6 +43,9 @@ public class Renderer
         VirtualViewport.LoadContent(main);
     }
 
+    /// <summary>
+    /// Draw the scene to the virtual viewport then draw the virtual viewport to the screen.
+    /// </summary>
     public void Draw()
     {
         GraphicsDevice graphicsDevice = main.GraphicsDevice;
@@ -63,6 +70,11 @@ public class Renderer
         spriteBatch.End();
     }
 
+
+    /// <summary>
+    /// Draw the level to the given sprite batch.
+    /// </summary>
+    /// <param name="spriteBatch">The sprite batch to draw to (where "Begin" has already been called).</param>
     private void DrawLevel(SpriteBatch spriteBatch)
     {
         main.Level.Draw(spriteBatch);

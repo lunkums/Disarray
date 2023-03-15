@@ -6,11 +6,11 @@ using Microsoft.Xna.Framework;
 namespace Disarray.Engine.Systems;
 
 [With(typeof(Transform), typeof(RigidBody))]
-public class VerletSystem : AEntitySetSystem<float>
+public class VerletIntegration : AEntitySetSystem<float>
 {
     private readonly Physics physics;
 
-    public VerletSystem(World world, Physics physics) : base(world)
+    public VerletIntegration(World world, Physics physics) : base(world)
     {
         this.physics = physics;
     }

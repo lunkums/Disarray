@@ -6,6 +6,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Disarray;
 
+/// <summary>
+/// Runs the game and holds references to its subsystems.
+/// </summary>
 public class Main : Game
 {
     public Main() : base()

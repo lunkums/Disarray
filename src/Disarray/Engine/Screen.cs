@@ -3,6 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Disarray.Engine;
 
+/// <summary>
+/// Manages the game screen. Acts as a wrapper for the <see cref="GameWindow"/> and <see cref="GraphicsDeviceManager"/>.
+/// </summary>
 public class Screen
 {
     private GraphicsDeviceManager graphicsDeviceManager;
@@ -21,6 +24,9 @@ public class Screen
 
     public event EventHandler<EventArgs> ResolutionChanged;
 
+    /// <summary>
+    /// Set, but don't apply, the full screen status of the screen.
+    /// </summary>
     public bool IsFullScreen
     {
         get => isFullScreen;
@@ -30,6 +36,10 @@ public class Screen
             isFullScreen = value;
         }
     }
+
+    /// <summary>
+    /// Set, but don't apply, the borderless status of the window.
+    /// </summary>
     public bool IsBorderless
     {
         get => isBorderless;
@@ -39,6 +49,10 @@ public class Screen
             isBorderless = value;
         }
     }
+
+    /// <summary>
+    /// Set, but don't apply, the resolution of the screen.
+    /// </summary>
     public Point Resolution
     {
         get => resolution;
@@ -74,18 +88,30 @@ public class Screen
         gameWindow.ClientSizeChanged += GameWindow_ClientSizeChanged;
     }
 
+
+    /// <summary>
+    /// Set the resolution to the given width and height and apply the change.
+    /// </summary>
+    /// <param name="width">The new width.</param>
+    /// <param name="height">The new height.</param>
     public void SetResolution(int width, int height)
     {
         resolution = new(width, height);
         ApplyChanges();
     }
 
+    /// <summary>
+    /// Set the full screen status to the opposite of its current value and apply the change.
+    /// </summary>
     public void ToggleFullscreen()
     {
         IsFullScreen = !IsFullScreen;
         ApplyChanges();
     }
 
+    /// <summary>
+    /// Set the borderless status to the opposite of its current value and apply the change.
+    /// </summary>
     public void ToggleBorderless()
     {
         IsBorderless = !IsBorderless;
@@ -96,6 +122,9 @@ public class Screen
      * Manage state
      */
 
+    /// <summary>
+    /// Apply any recent changes to the full screen status, borderless status, and resolution.
+    /// </summary>
     public void ApplyChanges()
     {
         ApplyFullScreen();

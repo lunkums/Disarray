@@ -1,11 +1,14 @@
 using Disarray.Engine.Controllers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace Disarray.Engine;
 
+/// <summary>
+/// Handles input and provides an API for developers to specify custom actions. Actions are input events (pressed, up,
+/// down) with a special meaning related to gameplay.
+/// </summary>
 public sealed class Input
 {
     private readonly List<IController> controllers;
