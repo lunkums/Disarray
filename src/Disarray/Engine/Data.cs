@@ -1,7 +1,6 @@
 using Disarray.Engine.Serialization;
 using Disarray.Gameplay.Levels;
 using Microsoft.Xna.Framework;
-using MonoGame.Extended.Serialization;
 using Newtonsoft.Json;
 
 namespace Disarray.Engine;
@@ -28,7 +27,8 @@ public static class Data
             new RasterizerStateConverter(),
             new SamplerStateConverter(),
             new ColorJsonConverter(),
-            new OrthographicCameraConverter(),
+            new Vector2JsonConverter(),
+            new PointJsonConverter(),
             LevelFactory.LevelJsonConverter
         };
         GlobalSerializerSettings = new JsonSerializerSettings()

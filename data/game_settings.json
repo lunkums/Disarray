@@ -2,6 +2,11 @@
   "Content": {
     "RootDirectory": "assets"
   },
+  "Graphics": {
+    "PreferredBackBufferWidth": 800,
+    "PreferredBackBufferHeight": 480,
+    "IsFullScreen": false
+  },
   "IsFixedTimeStep": true,
   "IsMouseVisible": true,
   "Level": {
@@ -26,6 +31,7 @@
   },
   "Window": {
     "AllowUserResizing": true,
+    "IsBorderlessEXT": false,
     "Title": "Disarray"
   }
 }

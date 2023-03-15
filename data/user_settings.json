@@ -1,9 +1,4 @@
 {
-  "Graphics": {
-    "PreferredBackBufferWidth": 1920,
-    "PreferredBackBufferHeight": 1080,
-    "IsFullScreen": false
-  },
   "Input": {
     "GamePadSupported": false,
     "KeyboardController": {
@@ -22,7 +17,9 @@
       }
     }
   },
-  "Window": {
-    "IsBorderlessEXT": false
+  "Screen": {
+    "IsFullScreen": true,
+    "Resolution": "2560 1440"
+    }
   }
 }

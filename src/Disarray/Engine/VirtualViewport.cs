@@ -35,7 +35,7 @@ public class VirtualViewport
         gameWindow = main.Window;
 
         Resize();
-        main.Screen.ResolutionChanged += OnClientSizeOrResolutionChanged;
+        main.Screen.ResolutionChanged += OnResolutionChanged;
     }
     
     /// <summary>
@@ -141,7 +141,7 @@ public class VirtualViewport
     /// </summary>
     /// <param name="sender">The sender of the event.</param>
     /// <param name="e">The event args.</param>
-    private void OnClientSizeOrResolutionChanged(object? sender, EventArgs e)
+    private void OnResolutionChanged(object? sender, EventArgs e)
     {
         Resize();
     }

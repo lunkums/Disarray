@@ -5,76 +5,144 @@ namespace Disarray.Engine;
 
 public class Screen
 {
-    public const int DefaultWidth = 800;
-    public const int DefaultHeight = 480;
-
     private GraphicsDeviceManager graphicsDeviceManager;
     private GameWindow gameWindow;
 
-    private int previousWindowWidth = DefaultWidth;
-    private int previousWindowHeight = DefaultHeight;
+    private int previousWindowWidth;
+    private int previousWindowHeight;
+
+    private Point resolution;
+    private bool isFullScreen;
+    private bool isBorderless;
+
+    private bool customResolution;
+    private bool customFullScreenStatus;
+    private bool customBorderlessStatus;
 
     public event EventHandler<EventArgs> ResolutionChanged;
 
-    public bool IsFullScreen => graphicsDeviceManager.IsFullScreen;
-    public bool IsBorderless => gameWindow.IsBorderlessEXT;
+    public bool IsFullScreen
+    {
+        get => isFullScreen;
+        set
+        {
+            customFullScreenStatus = true;
+            isFullScreen = value;
+        }
+    }
+    public bool IsBorderless
+    {
+        get => isBorderless;
+        set
+        {
+            customBorderlessStatus = true;
+            isBorderless = value;
+        }
+    }
+    public Point Resolution
+    {
+        get => resolution;
+        set
+        {
+            customResolution = true;
+            resolution = value;
+        }
+    }
 
     public void Initialize(Main main)
     {
         graphicsDeviceManager = main.Graphics;
-
         gameWindow = main.Window;
-        if (IsFullScreen)
+
+        previousWindowHeight = graphicsDeviceManager.PreferredBackBufferHeight;
+        previousWindowWidth = graphicsDeviceManager.PreferredBackBufferWidth;
+
+        if (!customBorderlessStatus)
         {
-            // If the game starts fullscreen, then set the resolution to match it
-            SetResolution(gameWindow.ClientBounds.Width, gameWindow.ClientBounds.Height);
+            isBorderless = gameWindow.IsBorderlessEXT;
         }
+        if (!customFullScreenStatus)
+        {
+            isFullScreen = graphicsDeviceManager.IsFullScreen;
+        }
+        if (!customResolution)
+        {
+            resolution = new(gameWindow.ClientBounds.Width, gameWindow.ClientBounds.Height);
+        }
+        ApplyChanges();
+
         gameWindow.ClientSizeChanged += GameWindow_ClientSizeChanged;
     }
 
-    /// <summary>
-    /// Set the resolution of the window to the given values.
-    /// </summary>
-    /// <param name="width">The new width of the window.</param>
-    /// <param name="height">The new height of the window.</param>
     public void SetResolution(int width, int height)
     {
-        graphicsDeviceManager.PreferredBackBufferWidth = width;
-        graphicsDeviceManager.PreferredBackBufferHeight = height;
-        graphicsDeviceManager.ApplyChanges();
-        ResolutionChanged?.Invoke(this, EventArgs.Empty);
+        resolution = new(width, height);
+        ApplyChanges();
     }
 
     public void ToggleFullscreen()
     {
+        IsFullScreen = !IsFullScreen;
+        ApplyChanges();
+    }
+
+    public void ToggleBorderless()
+    {
+        IsBorderless = !IsBorderless;
+        ApplyChanges();
+    }
+
+    /*
+     * Manage state
+     */
+
+    public void ApplyChanges()
+    {
+        ApplyFullScreen();
+        ApplyBorderless();
+        ApplyResolution();
+        graphicsDeviceManager.ApplyChanges();
+        ResolutionChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void ApplyFullScreen()
+    {
+        if (graphicsDeviceManager.IsFullScreen == isFullScreen) return;
+
         int targetWidth;
         int targetHeight;
 
-        if (IsFullScreen)
-        {
-            targetWidth = previousWindowWidth;
-            targetHeight = previousWindowHeight;
-        }
-        else
+        if (isFullScreen)
         {
             previousWindowWidth = gameWindow.ClientBounds.Width;
             previousWindowHeight = gameWindow.ClientBounds.Height;
             targetWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             targetHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
         }
+        else
+        {
+            targetWidth = previousWindowWidth;
+            targetHeight = previousWindowHeight;
+        }
 
-        graphicsDeviceManager.IsFullScreen = !graphicsDeviceManager.IsFullScreen;
-        SetResolution(targetWidth, targetHeight);
+        graphicsDeviceManager.IsFullScreen = isFullScreen;
+        Resolution = new(targetWidth, targetHeight);
     }
 
-    public void ToggleBorderless()
+    private void ApplyBorderless()
     {
-        gameWindow.IsBorderlessEXT = !IsBorderless;
-        graphicsDeviceManager.ApplyChanges();
+        gameWindow.IsBorderlessEXT = isBorderless;
+    }
+
+    private void ApplyResolution()
+    {
+        graphicsDeviceManager.PreferredBackBufferWidth = resolution.X;
+        graphicsDeviceManager.PreferredBackBufferHeight = resolution.Y;
     }
 
     private void GameWindow_ClientSizeChanged(object? sender, EventArgs e)
     {
-        SetResolution(gameWindow.ClientBounds.Width, gameWindow.ClientBounds.Height);
+        resolution = new(gameWindow.ClientBounds.Width, gameWindow.ClientBounds.Height);
+        ApplyChanges();
     }
 }
