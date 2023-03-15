@@ -5,11 +5,14 @@ namespace Disarray.Engine;
 
 public class Screen
 {
+    public const int DefaultWidth = 800;
+    public const int DefaultHeight = 480;
+
     private GraphicsDeviceManager graphicsDeviceManager;
     private GameWindow gameWindow;
 
-    private int previousWindowWidth;
-    private int previousWindowHeight;
+    private int previousWindowWidth = DefaultWidth;
+    private int previousWindowHeight = DefaultHeight;
 
     public event EventHandler<EventArgs> ResolutionChanged;
 
@@ -21,8 +24,11 @@ public class Screen
         graphicsDeviceManager = main.Graphics;
 
         gameWindow = main.Window;
-        previousWindowWidth = gameWindow.ClientBounds.Width;
-        previousWindowHeight = gameWindow.ClientBounds.Height;
+        if (IsFullScreen)
+        {
+            // If the game starts fullscreen, then set the resolution to match it
+            SetResolution(gameWindow.ClientBounds.Width, gameWindow.ClientBounds.Height);
+        }
         gameWindow.ClientSizeChanged += GameWindow_ClientSizeChanged;
     }
 
