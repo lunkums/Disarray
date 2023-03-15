@@ -2,7 +2,7 @@
 using Disarray.Engine;
 using Disarray.Gameplay.Levels;
 using Microsoft.Xna.Framework;
-using MonoGame.Extended;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Disarray;
 
@@ -18,44 +18,29 @@ public class Main : Game
         Data.InitializeConverters(this);
 
         Assets = new();
-        Camera = new(GraphicsDevice);
         Input = new();
         Physics = new();
         Renderer = new();
+        Screen = new();
         World = new();
         Level = LevelFactory.Create();
     }
 
-    public event Action ResolutionChanged;
-
     // Engine components and global data
     public Assets Assets { get; init; }
-    public OrthographicCamera Camera { get; init; }
     public GraphicsDeviceManager Graphics { get; init; }
     public Input Input { get; init; }
     public Physics Physics { get; init; }
     public Renderer Renderer { get; init; }
+    public Screen Screen { get; init; }
     public World World { get; init; }
     public ILevel Level { get; set; }
 
     // Model view projection matrices
     public Matrix Model => Matrix.Identity;
-    public Matrix View => Camera.GetViewMatrix(Vector2.Zero);
+    public Matrix View => Matrix.Identity;
     public Matrix Projection => Matrix.CreateOrthographicOffCenter(0, GraphicsDevice.Viewport.Width,
         GraphicsDevice.Viewport.Height, 0, 0, -1);
-
-    /// <summary>
-    /// Set the resolution of the window to the given values.
-    /// </summary>
-    /// <param name="width">The new width of the window.</param>
-    /// <param name="height">The new height of the window.</param>
-    public void SetResolution(int width, int height)
-    {
-        Graphics.PreferredBackBufferWidth = width;
-        Graphics.PreferredBackBufferHeight = height;
-        Graphics.ApplyChanges();
-        ResolutionChanged?.Invoke();
-    }
 
     protected override void Initialize()
     {
@@ -64,9 +49,11 @@ public class Main : Game
 
         // Initialize the engine after applying settings
         Assets.Initialize(this);
+        Input.Initialize(this);
         Level.Initialize(this);
-        Renderer.Initialize(this);
         Physics.Initialize(this);
+        Renderer.Initialize(this);
+        Screen.Initialize(this);
 
         base.Initialize();
     }

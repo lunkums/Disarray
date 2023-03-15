@@ -48,15 +48,6 @@ public class PlayerSystem : AEntitySetSystem<float>
         {
             direction += Vector2.UnitX;
         }
-        if (Input.IsActionPressed("ResizeH"))
-        {
-            Debug.WriteLine(Main.Camera.ScreenToWorld(Main.Input.MousePosition));
-        }
-        if (Input.IsActionPressed("ResizeV"))
-        {
-            Main.SetResolution(128, 128);
-            Main.Graphics.ApplyChanges();
-        }
 
         rigidBody.Velocity = direction * speed;
     }

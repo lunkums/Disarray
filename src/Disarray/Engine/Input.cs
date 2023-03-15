@@ -1,5 +1,6 @@
-using Microsoft.Xna.Framework;
 using Disarray.Engine.Controllers;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
 
 namespace Disarray.Engine;
@@ -10,6 +11,7 @@ public sealed class Input : IDisposable
 
     private readonly IEnumerable<IController> controllers;
 
+    private Main main;
     private bool gameInFocus;
 
     public Input()
@@ -41,6 +43,11 @@ public sealed class Input : IDisposable
         controllerCount--;
     }
 
+    public void Initialize(Main main)
+    {
+        this.main = main;
+    }
+
     /// <summary>
     /// Update the state of the input, including whether the game is in focus.
     /// </summary>
@@ -53,6 +60,8 @@ public sealed class Input : IDisposable
         {
             controller.Update();
         }
+
+        HandleSignals();
     }
 
     /*
@@ -105,6 +114,15 @@ public sealed class Input : IDisposable
     {
         return (KeyboardController.IsActionDefined(action) || MouseController.IsActionDefined(action))
             && (GamePadController.IsActionDefined(action) || !GamePadSupported);
+    }
+
+    private void HandleSignals()
+    {
+        if ((KeyboardController.IsKeyDown(Keys.LeftAlt) || KeyboardController.IsKeyDown(Keys.RightAlt))
+            && KeyboardController.IsKeyPressed(Keys.Enter))
+        {
+            main.Screen.ToggleFullscreen();
+        }
     }
 
     private static PlayerIndex PlayerIndexFromInt(int index)

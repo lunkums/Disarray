@@ -2,7 +2,7 @@
   "Graphics": {
     "IsFullScreen": false,
     "PreferredBackBufferWidth": 1920,
-    "PreferredBackBufferHeight": 1280
+    "PreferredBackBufferHeight": 1080
   },
   "Input": {
     "GamePadSupported": false,
@@ -21,5 +21,8 @@
         "ResizeV": "RightMouseButton"
       }
     }
+  },
+  "Window": {
+    "IsBorderlessEXT": false
   }
 }

@@ -59,7 +59,7 @@ public class TilemapRenderer
 
     public void Update(float delta)
     {
-        Vector2 mousePosVec = main.Camera.ScreenToWorld(main.Input.MousePosition);
+        Vector2 mousePosVec = main.Input.MousePosition;
 
         // Check if mouse is in the bounds of a Tiled object
         debugRect = null;

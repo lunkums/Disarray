@@ -25,7 +25,7 @@ public class Assets
         string file = Path.ChangeExtension(relativeFilePath, null);
 
         T asset = contentManager.Load<T>(file);
-
+        
         return asset;
     }
 }

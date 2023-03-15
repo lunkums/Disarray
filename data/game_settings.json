@@ -1,11 +1,4 @@
 {
-  "Camera": {
-    "ViewportAdapterType": "Boxing",
-    "ViewportParameters": {
-      "VirtualWidth": 192,
-      "VirtualHeight": 128
-    }
-  },
   "Content": {
     "RootDirectory": "assets"
   },
@@ -22,9 +15,17 @@
     "DepthStencilState": "None",
     "RasterizerState": "CullNone",
     "SamplerState": "PointClamp",
-    "SpriteSortMode": "BackToFront"
+    "SpriteSortMode": "BackToFront",
+    "VirtualViewport": {
+      "Width": 192,
+      "Height": 128,
+      "ClearColor": "#000000",
+      "DrawColor": "#ffffff",
+      "ResizeMethod": "PreserveAspectRatio"
+    }
   },
   "Window": {
-    "AllowUserResizing": false
+    "AllowUserResizing": true,
+    "Title": "Disarray"
   }
 }

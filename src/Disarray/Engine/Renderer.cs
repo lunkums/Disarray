@@ -18,6 +18,7 @@ public class Renderer
     public DepthStencilState DepthStencilState { get; set; }
     public RasterizerState RasterizerState { get; set; }
     public Effect Effect { get; set; }
+    public VirtualViewport VirtualViewport { get; set; }
 
     public void Initialize(Main main)
     {
@@ -35,14 +36,30 @@ public class Renderer
     public void LoadContent()
     {
         spriteBatch = new(main.GraphicsDevice);
+        VirtualViewport.LoadContent(main);
     }
 
     public void Draw()
     {
-        main.GraphicsDevice.Clear(ClearColor);
+        GraphicsDevice graphicsDevice = main.GraphicsDevice;
 
-        spriteBatch.Begin(SpriteSortMode, BlendState, SamplerState, DepthStencilState, RasterizerState, Effect, main.View);
+        // Set the render target
+        graphicsDevice.SetRenderTarget(VirtualViewport.RenderTarget);
+        graphicsDevice.Clear(ClearColor);
+
+        // Draw the sprites
+        spriteBatch.Begin(SpriteSortMode, BlendState, SamplerState, graphicsDevice.DepthStencilState, RasterizerState,
+            Effect);
         spriteSystems.Update(spriteBatch);
+        spriteBatch.End();
+
+        // Drop the render target before drawing it
+        graphicsDevice.SetRenderTarget(null);
+        graphicsDevice.Clear(VirtualViewport.ClearColor);
+
+        // Draw the render target
+        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState, SamplerState, DepthStencilState, RasterizerState);
+        spriteBatch.Draw(VirtualViewport.RenderTarget, VirtualViewport.Destination, VirtualViewport.DrawColor);
         spriteBatch.End();
     }
 
