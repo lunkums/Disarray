@@ -1,6 +1,5 @@
 {
   "Input": {
-    "GamePadSupported": false,
     "KeyboardController": {
       "ActionMap": {
         "MoveUp": "W",

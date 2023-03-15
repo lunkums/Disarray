@@ -7,6 +7,10 @@
     "PreferredBackBufferHeight": 480,
     "IsFullScreen": false
   },
+  "Input": {
+    "gamePadSupported": false,
+    "gamePadDeadZone": "None"
+  },
   "IsFixedTimeStep": true,
   "IsMouseVisible": true,
   "Level": {

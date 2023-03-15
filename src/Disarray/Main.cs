@@ -15,7 +15,7 @@ public class Main : Game
         Graphics = new(this);
         Graphics.ApplyChanges();
 
-        Data.InitializeConverters(this);
+        Data.Initialize(this);
 
         Assets = new();
         Input = new();
@@ -80,11 +80,8 @@ public class Main : Game
 
     protected override void Dispose(bool disposing)
     {
-        Input.Dispose();
-
         // Level should implement IDisposable if you want to manually clean up its resources
         (Level as IDisposable)?.Dispose();
-
         base.Dispose(disposing);
     }
 }

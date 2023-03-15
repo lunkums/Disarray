@@ -2,6 +2,10 @@ using Disarray.Engine.Serialization;
 using Disarray.Gameplay.Levels;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace Disarray.Engine;
 
@@ -18,10 +22,13 @@ public static class Data
     public static JsonConverter[] GlobalConverters;
     public static JsonSerializerSettings GlobalSerializerSettings;
 
+    private static Main Main;
+
     static Data()
     {
         GlobalConverters = new JsonConverter[]
         {
+            new StringEnumConverter(new DefaultNamingStrategy(), true),
             new BlendStateConverter(),
             new DepthStencilStateConverter(),
             new RasterizerStateConverter(),
@@ -50,20 +57,13 @@ public static class Data
     }
 
     /// <summary>
-    /// The static constructor is always called before an instance of game is created, so this must be called in the
-    /// constructor of game to initialize JSON convertors that need an instance of the game class to serialize
-    /// correctly.
+    /// Initialize the data class.
     /// </summary>
-    /// <param name="game">The game instance.</param>
-    public static void InitializeConverters(Game game)
+    /// <param name="main">The game instance.</param>
+    public static void Initialize(Main main)
     {
-        foreach (var converter in GlobalConverters)
-        {
-            if (converter is IGameConverter gameConverter)
-            {
-                gameConverter.Game = game;
-            }
-        }
+        Main = main;
+        Main.Exiting += OnGameExiting;
     }
 
     public static T LoadFromFilePath<T>(string filePath, bool relativeToDataDir = true)
@@ -96,5 +96,22 @@ public static class Data
     public static string ReadTextFromRelativeFile(string relativeFilePath)
     {
         return File.ReadAllText(Path.Combine(DataDirectoryPath, relativeFilePath));
+    }
+
+    public static void SaveUserSettings()
+    {
+        string userSettings;
+        var temp = GlobalSerializerSettings.ContractResolver;
+
+        GlobalSerializerSettings.ContractResolver = new UserSettingsContractResolver();
+        userSettings = JsonConvert.SerializeObject(Main, Formatting.Indented, GlobalSerializerSettings);
+        GlobalSerializerSettings.ContractResolver = temp;
+
+        File.WriteAllText(Path.Combine(DataDirectoryPath, "user_settings.json"), userSettings);
+    }
+
+    private static void OnGameExiting(object? sender, EventArgs e)
+    {
+        SaveUserSettings();
     }
 }

@@ -12,4 +12,9 @@ public static class LevelFactory
     {
         return new Level();
     }
+
+    public static bool SerializeConditionally(object obj)
+    {
+        return false;
+    }
 }

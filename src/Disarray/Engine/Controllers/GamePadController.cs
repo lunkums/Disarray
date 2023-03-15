@@ -5,8 +5,14 @@ namespace Disarray.Engine.Controllers;
 
 public class GamePadController : Controller<GamePadState, Buttons>
 {
-    public PlayerIndex PlayerIndex { get; set; }
-    public GamePadDeadZone GamePadDeadZone { get; set; }
+    private PlayerIndex playerIndex;
+    private GamePadDeadZone deadZone;
+
+    public void Initialize(PlayerIndex playerIndex, GamePadDeadZone deadZone)
+    {
+        this.playerIndex = playerIndex;
+        this.deadZone = deadZone;
+    }
 
     public bool IsButtonDown(Buttons button)
     {
@@ -40,6 +46,6 @@ public class GamePadController : Controller<GamePadState, Buttons>
 
     protected override GamePadState GetState()
     {
-        return GamePad.GetState(PlayerIndex, GamePadDeadZone);
+        return GamePad.GetState(playerIndex, deadZone);
     }
 }

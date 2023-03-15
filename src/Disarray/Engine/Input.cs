@@ -1,15 +1,14 @@
 using Disarray.Engine.Controllers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace Disarray.Engine;
 
-public sealed class Input : IDisposable
+public sealed class Input
 {
-    private static int controllerCount = 0;
-
-    private readonly IEnumerable<IController> controllers;
+    private readonly List<IController> controllers;
 
     private Main main;
     private bool gameInFocus;
@@ -18,34 +17,33 @@ public sealed class Input : IDisposable
     {
         MouseController = new();
         KeyboardController = new();
-        GamePadController = new()
-        {
-            PlayerIndex = PlayerIndexFromInt(controllerCount++)
-        };
+        GamePadController = new();
 
-        controllers = new IController[]
+        controllers = new List<IController>()
         {
-            KeyboardController, MouseController, GamePadController
+            KeyboardController, MouseController
         };
     }
 
-    public MouseController MouseController { get; private set; }
+    public MouseController MouseController { get; init; }
     public Point MousePoint => MouseController.Point;
     public Vector2 MousePosition => MouseController.Position;
 
-    public KeyboardController KeyboardController { get; private set; }
+    public KeyboardController KeyboardController { get; init; }
 
-    public GamePadController GamePadController { get; private set; }
-    public bool GamePadSupported { get; private set; }
-
-    public void Dispose()
-    {
-        controllerCount--;
-    }
+    public GamePadController GamePadController { get; init; }
+    public bool GamePadSupported { get; init; }
+    public GamePadDeadZone GamePadDeadZone { get; init; }
 
     public void Initialize(Main main)
     {
         this.main = main;
+
+        if (GamePadSupported)
+        {
+            GamePadController.Initialize(PlayerIndex.One, GamePadDeadZone);
+            controllers.Add(GamePadController);
+        }
     }
 
     /// <summary>
@@ -113,7 +111,7 @@ public sealed class Input : IDisposable
     private bool IsActionDefined(string action)
     {
         return (KeyboardController.IsActionDefined(action) || MouseController.IsActionDefined(action))
-            && (GamePadController.IsActionDefined(action) || !GamePadSupported);
+            && (!GamePadSupported || GamePadController.IsActionDefined(action));
     }
 
     private void HandleSignals()
@@ -122,23 +120,6 @@ public sealed class Input : IDisposable
             && KeyboardController.IsKeyPressed(Keys.Enter))
         {
             main.Screen.ToggleFullscreen();
-        }
-    }
-
-    private static PlayerIndex PlayerIndexFromInt(int index)
-    {
-        switch (index)
-        {
-            case 0:
-                return PlayerIndex.One;
-            case 1:
-                return PlayerIndex.Two;
-            case 2:
-                return PlayerIndex.Three;
-            case 3:
-                return PlayerIndex.Four;
-            default:
-                throw new Exception("Invalid player index specified");
         }
     }
 }
