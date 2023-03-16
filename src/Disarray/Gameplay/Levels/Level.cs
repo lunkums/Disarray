@@ -1,5 +1,6 @@
 using DefaultEcs;
 using DefaultEcs.System;
+using Disarray.Engine;
 using Disarray.Engine.Components;
 using Disarray.Engine.Systems;
 using Microsoft.Xna.Framework;
@@ -9,7 +10,10 @@ namespace Disarray.Gameplay.Levels;
 
 public class Level : ILevel
 {
-    private Main main;
+    private World world;
+    private Input input;
+    private Camera camera;
+
     private ISystem<float> updateSystems;
     private ISystem<SpriteBatch> drawSystems;
 
@@ -22,7 +26,9 @@ public class Level : ILevel
 
     public void Initialize(Main main)
     {
-        this.main = main;
+        world = main.World;
+        input = main.Input;
+        camera = main.Camera;
 
         tilemapRenderer = new(main);
 
@@ -39,7 +45,7 @@ public class Level : ILevel
     public void LoadContent()
     {
         // Create your entities here
-        Entity player = main.World.CreateEntity();
+        Entity player = world.CreateEntity();
 
         player.Set<Transform>(new());
         player.Set<RigidBody>(new());
@@ -61,6 +67,44 @@ public class Level : ILevel
     public void Update(GameTime gameTime)
     {
         float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+        Vector2 direction = Vector2.Zero;
+        int speed = 250;
+
+        if (input.IsActionDown("MoveUp"))
+        {
+            direction -= Vector2.UnitY;
+        }
+        if (input.IsActionDown("MoveDown"))
+        {
+            direction += Vector2.UnitY;
+        }
+        if (input.IsActionDown("MoveLeft"))
+        {
+            direction -= Vector2.UnitX;
+        }
+        if (input.IsActionDown("MoveRight"))
+        {
+            direction += Vector2.UnitX;
+        }
+        if (input.IsActionDown("ScaleUp"))
+        {
+            camera.Zoom += 0.1f;
+        }
+        if (input.IsActionDown("ScaleDown"))
+        {
+            camera.Zoom -= 0.1f;
+        }
+        if (input.IsActionDown("RotateUp"))
+        {
+            camera.Rotation += 0.1f;
+        }
+        if (input.IsActionDown("RotateDown"))
+        {
+            camera.Rotation -= 0.1f;
+        }
+
+        camera.Position += direction * speed * delta;
 
         // Add your update logic here
         updateSystems.Update(delta);

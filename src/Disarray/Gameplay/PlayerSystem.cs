@@ -3,7 +3,6 @@ using DefaultEcs.System;
 using Disarray.Engine;
 using Disarray.Engine.Components;
 using Microsoft.Xna.Framework;
-using System.Diagnostics;
 
 namespace Disarray.Gameplay;
 

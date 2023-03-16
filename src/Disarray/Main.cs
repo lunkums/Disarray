@@ -21,6 +21,7 @@ public class Main : Game
         Data.Initialize(this);
 
         Assets = new();
+        Camera = new();
         Input = new();
         Physics = new();
         Renderer = new();
@@ -31,6 +32,7 @@ public class Main : Game
 
     // Engine components and global data
     public Assets Assets { get; init; }
+    public Camera Camera { get; init; }
     public GraphicsDeviceManager Graphics { get; init; }
     public Input Input { get; init; }
     public Physics Physics { get; init; }
@@ -41,7 +43,7 @@ public class Main : Game
 
     // Model view projection matrices
     public Matrix Model => Matrix.Identity;
-    public Matrix View => Matrix.Identity;
+    public Matrix View => Camera.GetViewMatrix();
     public Matrix Projection => Matrix.CreateOrthographicOffCenter(0, GraphicsDevice.Viewport.Width,
         GraphicsDevice.Viewport.Height, 0, 0, -1);
 
@@ -52,6 +54,7 @@ public class Main : Game
 
         // Initialize the engine after applying settings
         Assets.Initialize(this);
+        Camera.Initialize(this);
         Input.Initialize(this);
         Level.Initialize(this);
         Physics.Initialize(this);

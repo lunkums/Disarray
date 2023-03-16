@@ -56,7 +56,7 @@ public class Renderer
 
         // Draw the sprites
         spriteBatch.Begin(SpriteSortMode, BlendState, SamplerState, graphicsDevice.DepthStencilState, RasterizerState,
-            Effect);
+            Effect, main.View);
         spriteSystems.Update(spriteBatch);
         spriteBatch.End();
 

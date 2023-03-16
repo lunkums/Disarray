@@ -19,7 +19,6 @@
     "Tilemap": "cavernasMap.tmx"
   },
   "Renderer": {
-    "ClearColor": "#ff00ff",
     "BlendState": "NonPremultiplied",
     "DepthStencilState": "None",
     "RasterizerState": "CullNone",
@@ -28,6 +27,8 @@
     "VirtualViewport": {
       "Width": 192,
       "Height": 128,
+      "HorizontalBleed": 0,
+      "VerticalBleed": 0,
       "ClearColor": "#000000",
       "DrawColor": "#ffffff",
       "ResizeMethod": "PreserveAspectRatio"

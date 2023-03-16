@@ -60,13 +60,14 @@ public class TilemapRenderer
     public void Update(float delta)
     {
         Vector2 mousePosVec = main.Input.MousePosition;
+        var mousePosInWorld = main.Camera.ScreenToWorld(mousePosVec);
 
         // Check if mouse is in the bounds of a Tiled object
         debugRect = null;
         foreach (var obj in collisionLayer.objects)
         {
             var objRect = new Rectangle((int)obj.x, (int)obj.y, (int)obj.width, (int)obj.height);
-            if (objRect.Contains((int)mousePosVec.X, (int)mousePosVec.Y))
+            if (objRect.Contains((int)mousePosInWorld.X, (int)mousePosInWorld.Y))
             {
                 debugRect = objRect;
             }

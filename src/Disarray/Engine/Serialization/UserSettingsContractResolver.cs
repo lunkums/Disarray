@@ -15,6 +15,7 @@ public class UserSettingsContractResolver : DefaultContractResolver
         Predicates = new()
         {
             { "assets", NeverSerialize },
+            { "camera", NeverSerialize },
             { "graphics", NeverSerialize },
             { "input", AlwaysSerialize },
             { "physics", NeverSerialize },

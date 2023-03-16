@@ -6,13 +6,15 @@
         "MoveDown": "S",
         "MoveLeft": "A",
         "MoveRight": "D",
-        "GameExit": "Escape"
+        "GameExit": "Escape",
+        "RotateUp": "Up",
+        "RotateDown": "Down"
       }
     },
     "MouseController": {
       "ActionMap": {
-        "ResizeH": "LeftMouseButton",
-        "ResizeV": "RightMouseButton"
+        "ScaleUp": "LeftMouseButton",
+        "ScaleDown": "RightMouseButton"
       }
     }
   },

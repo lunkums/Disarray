@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Runtime.InteropServices;
 
 namespace Disarray.Engine;
 
@@ -26,8 +27,11 @@ public class VirtualViewport
     public Rectangle Destination { get; private set; }
     public int Width { get; set; }
     public int Height { get; set; }
+    public int HorizontalBleed { get; set; }
+    public int VerticalBleed { get; set; }
     public Color ClearColor { get; set; }
     public Color DrawColor { get; set; }
+    public Matrix Scale { get; private set; }
 
     public void LoadContent(Main main)
     {
@@ -90,7 +94,7 @@ public class VirtualViewport
                 ResizeToWindow();
                 break;
             case ViewportResizeMethod.Stretch:
-                ResizeToWindow();
+                ResizeWithStretch();
                 break;
             case ViewportResizeMethod.PreserveAspectRatio:
                 ResizeToPreserveAspectRatio();
@@ -109,6 +113,17 @@ public class VirtualViewport
     {
         Rectangle clientBounds = gameWindow.ClientBounds;
         Destination = new(0, 0, clientBounds.Width, clientBounds.Height);
+        Scale = Matrix.CreateScale(1, 1, 1);
+    }
+
+    /// <summary>
+    /// Resize the destination rectangle to fit the window.
+    /// </summary>
+    private void ResizeWithStretch()
+    {
+        Rectangle clientBounds = gameWindow.ClientBounds;
+        Destination = new(0, 0, clientBounds.Width, clientBounds.Height);
+        Scale = Matrix.CreateScale((float)clientBounds.Width / Width, (float)clientBounds.Height / Height, 1);
     }
 
     /// <summary>
@@ -121,8 +136,8 @@ public class VirtualViewport
         var worldScaleX = (float)clientBounds.Width / Width;
         var worldScaleY = (float)clientBounds.Height / Height;
 
-        var safeScaleX = (float)clientBounds.Width / (Width - 0);
-        var safeScaleY = (float)clientBounds.Height / (Height - 0);
+        var safeScaleX = (float)clientBounds.Width / (Width - HorizontalBleed);
+        var safeScaleY = (float)clientBounds.Height / (Height - VerticalBleed);
 
         var worldScale = MathHelper.Max(worldScaleX, worldScaleY);
         var safeScale = MathHelper.Min(safeScaleX, safeScaleY);
@@ -133,7 +148,9 @@ public class VirtualViewport
 
         var x = clientBounds.Width / 2 - realWidth / 2;
         var y = clientBounds.Height / 2 - realHeight / 2;
+
         Destination = new(x, y, realWidth, realHeight);
+        Scale = Matrix.CreateScale(scale, scale, 1);
     }
 
     /// <summary>
