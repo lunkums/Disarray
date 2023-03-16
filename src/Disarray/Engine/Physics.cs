@@ -7,7 +7,7 @@ namespace Disarray.Engine;
 /// <summary>
 /// Handle the physics of the game including the integration of bodies and the detection and resolution of collisions.
 /// </summary>
-public class Physics
+public class Physics : ISubsystem
 {
     private ISystem<float> physicsSystems;
 

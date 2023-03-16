@@ -8,7 +8,7 @@ class Program
     [STAThread]
     static void Main(string[] args)
     {
-        using (Main game = Data.LoadFromFilePath<Main>("game_settings.json"))
+        using (Main game = Data.LoadFromFilePath<Main>(Data.GameSettingsFile))
         {
             game.Run();
         }

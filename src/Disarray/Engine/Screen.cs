@@ -6,7 +6,7 @@ namespace Disarray.Engine;
 /// <summary>
 /// Manages the game screen. Acts as a wrapper for the <see cref="GameWindow"/> and <see cref="GraphicsDeviceManager"/>.
 /// </summary>
-public class Screen
+public class Screen : ISubsystem
 {
     private GraphicsDeviceManager graphicsDeviceManager;
     private GameWindow gameWindow;

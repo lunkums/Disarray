@@ -6,7 +6,7 @@ namespace Disarray.Engine;
 /// <summary>
 /// Manages the loading of assets. Acts as a wrapper for the game's <see cref="ContentManager"/>.
 /// </summary>
-public class Assets
+public class Assets : ISubsystem
 {
     private ContentManager contentManager;
     private Regex rootDirectoryMatcher;

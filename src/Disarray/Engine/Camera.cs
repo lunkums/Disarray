@@ -5,7 +5,7 @@ namespace Disarray.Engine;
 /// <summary>
 /// Controls the camera. 
 /// </summary>
-public sealed class Camera
+public sealed class Camera : ISubsystem
 {
     private VirtualViewport virtualViewport;
     private float _maximumZoom = float.MaxValue;

@@ -8,8 +8,25 @@
     "IsFullScreen": false
   },
   "Input": {
-    "gamePadSupported": false,
-    "gamePadDeadZone": "None"
+    "GamePadSupported": false,
+    "GamePadDeadZone": "None",
+    "KeyboardController": {
+      "ActionMap": {
+        "MoveUp": "W",
+        "MoveDown": "S",
+        "MoveLeft": "A",
+        "MoveRight": "D",
+        "GameExit": "Escape",
+        "RotateUp": "Up",
+        "RotateDown": "Down"
+      }
+    },
+    "MouseController": {
+      "ActionMap": {
+        "ScaleUp": "LeftMouseButton",
+        "ScaleDown": "RightMouseButton"
+      }
+    }
   },
   "IsFixedTimeStep": true,
   "IsMouseVisible": true,

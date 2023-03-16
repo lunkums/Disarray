@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Disarray;
 
 /// <summary>
-/// Runs the game and holds references to its subsystems.
+/// Runs the game and provides access to its subsystems.
 /// </summary>
 public class Main : Game
 {
@@ -27,13 +27,13 @@ public class Main : Game
         Renderer = new();
         Screen = new();
         World = new();
-        Level = LevelFactory.Create();
+        Level = LevelLoader.Create();
     }
 
     // Engine components and global data
+    public GraphicsDeviceManager Graphics { get; }
     public Assets Assets { get; init; }
     public Camera Camera { get; init; }
-    public GraphicsDeviceManager Graphics { get; init; }
     public Input Input { get; init; }
     public Physics Physics { get; init; }
     public Renderer Renderer { get; init; }

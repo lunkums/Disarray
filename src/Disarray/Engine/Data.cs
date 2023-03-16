@@ -3,6 +3,7 @@ using Disarray.Gameplay.Levels;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using System.Globalization;
 
 namespace Disarray.Engine;
 
@@ -15,6 +16,16 @@ public static class Data
     /// The path to the data directory.
     /// </summary>
     public static readonly string DataDirectoryPath = "data/";
+
+    /// <summary>
+    /// The full name of the game settings file, or the default settings for the game.
+    /// </summary>
+    public static readonly string GameSettingsFile = "game_settings.json";
+
+    /// <summary>
+    /// The full name of the user settings file.
+    /// </summary>
+    public static readonly string UserSettingsFile = "user_settings.json";
 
     public static JsonConverter[] GlobalConverters;
     public static JsonSerializerSettings GlobalSerializerSettings;
@@ -33,11 +44,12 @@ public static class Data
             new ColorJsonConverter(),
             new Vector2JsonConverter(),
             new PointJsonConverter(),
-            LevelFactory.LevelJsonConverter
+            LevelLoader.LevelJsonConverter
         };
         GlobalSerializerSettings = new JsonSerializerSettings()
         {
-            Converters = GlobalConverters
+            Converters = GlobalConverters,
+            Culture = CultureInfo.InvariantCulture // Very important for internationalization
         };
     }
 
@@ -97,9 +109,24 @@ public static class Data
     /// <param name="main">The main game class.</param>
     public static void ApplyUserSettings(Main game)
     {
-        string userSettingsBlob = ReadTextFromRelativeFile("user_settings.json");
+        string userSettingsBlob = ReadTextFromRelativeFile(UserSettingsFile);
         JsonConvert.PopulateObject(userSettingsBlob, game, GlobalSerializerSettings);
         game.Graphics.ApplyChanges();
+    }
+
+    /// <summary>
+    /// Apply the settings of the component with type <typeparamref name="T"/> from the default settings file to the
+    /// game instance.
+    /// </summary>
+    /// <typeparam name="T">The type of settings to serialize.</typeparam>
+    /// <param name="game">The game instance.</param>
+    public static void ApplyDefaultSettings<T>(Main game) where T : ISubsystem
+    {
+        IContractResolver temp = GlobalSerializerSettings.ContractResolver;
+
+        GlobalSerializerSettings.ContractResolver = new ParentChildTypeContractResolver<Main, T>();
+        JsonConvert.PopulateObject(ReadTextFromRelativeFile(GameSettingsFile), game, GlobalSerializerSettings);
+        GlobalSerializerSettings.ContractResolver = temp;
     }
 
     /// <summary>
@@ -118,13 +145,13 @@ public static class Data
     public static void SaveUserSettings()
     {
         string userSettings;
-        var temp = GlobalSerializerSettings.ContractResolver;
+        IContractResolver temp = GlobalSerializerSettings.ContractResolver;
 
         GlobalSerializerSettings.ContractResolver = new UserSettingsContractResolver();
         userSettings = JsonConvert.SerializeObject(Main, Formatting.Indented, GlobalSerializerSettings);
         GlobalSerializerSettings.ContractResolver = temp;
 
-        File.WriteAllText(Path.Combine(DataDirectoryPath, "user_settings.json"), userSettings);
+        File.WriteAllText(Path.Combine(DataDirectoryPath, UserSettingsFile), userSettings);
     }
 
     private static void OnGameExiting(object? sender, EventArgs e)

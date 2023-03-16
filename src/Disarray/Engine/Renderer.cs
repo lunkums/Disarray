@@ -9,7 +9,7 @@ namespace Disarray.Engine;
 /// Handles the game's rendering systems by drawing the scene to a virtual viewport, then drawing the virtual viewport
 /// to the screen.
 /// </summary>
-public class Renderer
+public class Renderer : ISubsystem
 {
     private Main main;
     private ISystem<SpriteBatch> spriteSystems;

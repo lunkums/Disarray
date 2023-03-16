@@ -1,26 +1,2 @@
 {
-  "Input": {
-    "KeyboardController": {
-      "ActionMap": {
-        "MoveUp": "W",
-        "MoveDown": "S",
-        "MoveLeft": "A",
-        "MoveRight": "D",
-        "GameExit": "Escape",
-        "RotateUp": "Up",
-        "RotateDown": "Down"
-      }
-    },
-    "MouseController": {
-      "ActionMap": {
-        "ScaleUp": "LeftMouseButton",
-        "ScaleDown": "RightMouseButton"
-      }
-    }
-  },
-  "Screen": {
-    "IsFullScreen": true,
-    "Resolution": "2560 1440"
-    }
-  }
 }

@@ -9,7 +9,7 @@ namespace Disarray.Engine;
 /// Handles input and provides an API for developers to specify custom actions. Actions are input events (pressed, up,
 /// down) with a special meaning related to gameplay.
 /// </summary>
-public sealed class Input
+public sealed class Input : ISubsystem
 {
     private readonly List<IController> controllers;
 
