@@ -145,7 +145,7 @@ public sealed class Camera : ISubsystem
     {
         var viewport = virtualViewport.Destination;
         return Vector2.Transform(screenPosition - new Vector2(viewport.X, viewport.Y),
-            Matrix.Invert(GetViewMatrix()));
+            Matrix.Invert(GetViewMatrix() * virtualViewport.Scale));
     }
 
     public Matrix GetViewMatrix(Vector2 parallaxFactor)

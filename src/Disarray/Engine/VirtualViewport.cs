@@ -21,16 +21,16 @@ public class VirtualViewport
         PreserveAspectRatio = 2
     }
 
-    public ViewportResizeMethod ResizeMethod { get; set; }
     public RenderTarget2D RenderTarget { get; private set; }
     public Rectangle Destination { get; private set; }
+    public Matrix Scale { get; private set; }
+    public ViewportResizeMethod ResizeMethod { get; set; }
     public int Width { get; set; }
     public int Height { get; set; }
     public int HorizontalBleed { get; set; }
     public int VerticalBleed { get; set; }
     public Color ClearColor { get; set; }
     public Color DrawColor { get; set; }
-    public Matrix Scale { get; private set; }
 
     public void LoadContent(Main main)
     {
