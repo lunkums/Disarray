@@ -3,9 +3,10 @@
     "RootDirectory": "assets"
   },
   "Graphics": {
+    "IsFullScreen": false,
     "PreferredBackBufferWidth": 800,
     "PreferredBackBufferHeight": 480,
-    "IsFullScreen": false
+    "SynchronizeWithVerticalRetrace": false
   },
   "Input": {
     "GamePadSupported": false,
@@ -28,22 +29,27 @@
       }
     }
   },
-  "IsFixedTimeStep": true,
+  "IsFixedTimeStep": false,
   "IsMouseVisible": true,
   "Level": {
     "TilemapLayerDepth": 1.0,
     "TilemapDirectory": "levels",
-    "Tilemap": "cavernasMap.tmx"
+    "Tilemap": "tilemap.tmx"
+  },
+  "Physics": {
+    "MaxFrameTime": 0.25,
+    "FixedDeltaTime": 0.01666666666
   },
   "Renderer": {
     "BlendState": "NonPremultiplied",
+    "ClearColor": "#000000",
     "DepthStencilState": "None",
     "RasterizerState": "CullNone",
-    "SamplerState": "PointClamp",
+    "SamplerState": "PointWrap",
     "SpriteSortMode": "BackToFront",
     "VirtualViewport": {
-      "Width": 192,
-      "Height": 128,
+      "Width": 512,
+      "Height": 256,
       "HorizontalBleed": 0,
       "VerticalBleed": 0,
       "ClearColor": "#000000",
@@ -51,6 +57,7 @@
       "ResizeMethod": "PreserveAspectRatio"
     }
   },
+  "TargetElapsedTime": 0.01666666666,
   "Window": {
     "AllowUserResizing": true,
     "IsBorderlessEXT": false,

@@ -181,8 +181,7 @@ public sealed class Camera : ISubsystem
     private Matrix GetProjectionMatrix(Matrix viewMatrix)
     {
         var projection = Matrix.CreateOrthographicOffCenter(0, virtualViewport.Width, virtualViewport.Height, 0, -1, 0);
-        Matrix.Multiply(ref viewMatrix, ref projection, out projection);
-        return projection;
+        return Matrix.Multiply(viewMatrix, projection);
     }
 
     public BoundingFrustum GetBoundingFrustum()

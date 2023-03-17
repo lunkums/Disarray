@@ -30,6 +30,7 @@ public class Renderer : ISubsystem
 
         spriteSystems = new SequentialSystem<SpriteBatch>(
             new SpriteRenderer(main.World),
+            new MovingSpriteRenderer(main.World),
             new ActionSystem<SpriteBatch>(DrawLevel)
             );
     }
@@ -55,8 +56,8 @@ public class Renderer : ISubsystem
         graphicsDevice.Clear(ClearColor);
 
         // Draw the sprites
-        spriteBatch.Begin(SpriteSortMode, BlendState, SamplerState, graphicsDevice.DepthStencilState, RasterizerState,
-            Effect, main.View);
+        spriteBatch.Begin(SpriteSortMode, BlendState, SamplerState, DepthStencilState, RasterizerState, Effect,
+            main.View);
         spriteSystems.Update(spriteBatch);
         spriteBatch.End();
 

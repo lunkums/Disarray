@@ -8,6 +8,7 @@ namespace Disarray.Engine;
 /// </summary>
 public class Screen : ISubsystem
 {
+    private Game game;
     private GraphicsDeviceManager graphicsDeviceManager;
     private GameWindow gameWindow;
 
@@ -15,14 +16,28 @@ public class Screen : ISubsystem
     private int previousWindowHeight;
 
     private Point resolution;
+    private int targetFrameRate;
     private bool isFullScreen;
     private bool isBorderless;
+    private bool vsyncEnabled;
 
     private bool customResolution;
+    private bool customTargetFrameRate;
     private bool customFullScreenStatus;
     private bool customBorderlessStatus;
+    private bool customVsyncStatus;
 
     public event EventHandler<EventArgs> ResolutionChanged;
+
+    public int TargetFrameRate
+    {
+        get => targetFrameRate;
+        set
+        {
+            customTargetFrameRate = true;
+            targetFrameRate = value;
+        }
+    }
 
     /// <summary>
     /// Set, but don't apply, the full screen status of the screen.
@@ -50,6 +65,16 @@ public class Screen : ISubsystem
         }
     }
 
+    public bool VsyncEnabled
+    {
+        get => vsyncEnabled;
+        set
+        {
+            customVsyncStatus = true;
+            vsyncEnabled = value;
+        }
+    }
+
     /// <summary>
     /// Set, but don't apply, the resolution of the screen.
     /// </summary>
@@ -65,6 +90,7 @@ public class Screen : ISubsystem
 
     public void Initialize(Main main)
     {
+        game = main;
         graphicsDeviceManager = main.Graphics;
         gameWindow = main.Window;
 
@@ -82,6 +108,14 @@ public class Screen : ISubsystem
         if (!customResolution)
         {
             resolution = new(gameWindow.ClientBounds.Width, gameWindow.ClientBounds.Height);
+        }
+        if (!customVsyncStatus)
+        {
+            vsyncEnabled = graphicsDeviceManager.SynchronizeWithVerticalRetrace;
+        }
+        if (!customTargetFrameRate)
+        {
+            targetFrameRate = (int)Math.Round(1 / game.TargetElapsedTime.TotalSeconds);
         }
         ApplyChanges();
 
@@ -130,6 +164,8 @@ public class Screen : ISubsystem
         ApplyFullScreen();
         ApplyBorderless();
         ApplyResolution();
+        ApplyVsync();
+        ApplyTargetFrameRate();
         graphicsDeviceManager.ApplyChanges();
         ResolutionChanged?.Invoke(this, EventArgs.Empty);
     }
@@ -167,6 +203,16 @@ public class Screen : ISubsystem
     {
         graphicsDeviceManager.PreferredBackBufferWidth = resolution.X;
         graphicsDeviceManager.PreferredBackBufferHeight = resolution.Y;
+    }
+
+    private void ApplyVsync()
+    {
+        graphicsDeviceManager.SynchronizeWithVerticalRetrace = vsyncEnabled;
+    }
+
+    private void ApplyTargetFrameRate()
+    {
+        game.TargetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / targetFrameRate);
     }
 
     private void GameWindow_ClientSizeChanged(object? sender, EventArgs e)

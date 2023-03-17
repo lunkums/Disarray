@@ -6,8 +6,8 @@ namespace Disarray.Engine.Components;
 public struct Transform
 {
     public Vector2 Position;
-    public float Rotation;
     public Vector2 Scale;
+    public float Rotation;
 
     public Transform()
     {

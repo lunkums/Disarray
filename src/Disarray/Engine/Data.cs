@@ -44,6 +44,7 @@ public static class Data
             new ColorJsonConverter(),
             new Vector2JsonConverter(),
             new PointJsonConverter(),
+            new FrameTimeToTimeSpanConverter(),
             LevelLoader.LevelJsonConverter
         };
         GlobalSerializerSettings = new JsonSerializerSettings()

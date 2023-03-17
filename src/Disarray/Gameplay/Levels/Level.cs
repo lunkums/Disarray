@@ -5,6 +5,7 @@ using Disarray.Engine.Components;
 using Disarray.Engine.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
 
 namespace Disarray.Gameplay.Levels;
 
@@ -13,11 +14,12 @@ public class Level : ILevel
     private World world;
     private Input input;
     private Camera camera;
+    private Assets assets;
 
     private ISystem<float> updateSystems;
     private ISystem<SpriteBatch> drawSystems;
 
-    private TilemapRenderer tilemapRenderer;
+    private InfiniteTilemapRenderer tilemapRenderer;
 
     // Add additional properties here and serialize their values in data/game_settings.json
     public float TilemapLayerDepth { get; set; }
@@ -29,6 +31,7 @@ public class Level : ILevel
         world = main.World;
         input = main.Input;
         camera = main.Camera;
+        assets = main.Assets;
 
         tilemapRenderer = new(main);
 
@@ -47,17 +50,16 @@ public class Level : ILevel
         // Create your entities here
         Entity player = world.CreateEntity();
 
-        player.Set<Transform>(new());
         player.Set<RigidBody>(new());
-        //player.Set<Sprite>(new()
-        //{
-        //    Color = Color.White,
-        //    LayerDepth = 0f,
-        //    Origin = Vector2.Zero,
-        //    SourceRectangle = null,
-        //    SpriteEffects = SpriteEffects.None,
-        //    Texture = main.Content.Load<Texture2D>("textures/player")
-        //});
+        player.Set<Sprite>(new()
+        {
+            Color = Color.White,
+            LayerDepth = 0.1f,
+            Origin = Vector2.Zero,
+            SourceRectangle = null,
+            SpriteEffects = SpriteEffects.None,
+            Texture = assets.Load<Texture2D>("textures/player")
+        });
         player.Set<Player>(new());
 
         tilemapRenderer.LoadContent(TilemapDirectory, Tilemap);
@@ -67,44 +69,6 @@ public class Level : ILevel
     public void Update(GameTime gameTime)
     {
         float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-        Vector2 direction = Vector2.Zero;
-        int speed = 250;
-
-        if (input.IsActionDown("MoveUp"))
-        {
-            direction -= Vector2.UnitY;
-        }
-        if (input.IsActionDown("MoveDown"))
-        {
-            direction += Vector2.UnitY;
-        }
-        if (input.IsActionDown("MoveLeft"))
-        {
-            direction -= Vector2.UnitX;
-        }
-        if (input.IsActionDown("MoveRight"))
-        {
-            direction += Vector2.UnitX;
-        }
-        if (input.IsActionDown("ScaleUp"))
-        {
-            camera.Zoom += 0.1f;
-        }
-        if (input.IsActionDown("ScaleDown"))
-        {
-            camera.Zoom -= 0.1f;
-        }
-        if (input.IsActionDown("RotateUp"))
-        {
-            camera.Rotation += 0.1f;
-        }
-        if (input.IsActionDown("RotateDown"))
-        {
-            camera.Rotation -= 0.1f;
-        }
-
-        camera.Position += direction * speed * delta;
 
         // Add your update logic here
         updateSystems.Update(delta);
