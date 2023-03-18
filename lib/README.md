@@ -1,6 +1,6 @@
 # Static Libraries
 
-One of Disarray's dependencies is FNA which itself uses several native libraries for window management, input, image I/O, 3D graphics, and audio/video playback. A comprehensive list of these dependencies are:
+One of Disarray's dependencies is FNA which itself uses several native libraries for window management, input, image I/O, 3D graphics, and audio/video playback. A comprehensive list of these libraries are:
 
 - SDL2
 - FNA3D
