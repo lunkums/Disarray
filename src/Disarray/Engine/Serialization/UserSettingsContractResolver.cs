@@ -62,7 +62,7 @@ public class UserSettingsContractResolver : DefaultContractResolver
             property.Ignored = LevelLoader.ShouldIgnoreMember(member, memberSerialization, property);
         }
 
-        // Never serialize a property without a public or "init" setter
+        // Always ignore a property without a public or "init" setter
         if (propertyInfo != null)
         {
             property.Ignored = property.Ignored || propertyInfo.GetSetMethod() == null;
