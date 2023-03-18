@@ -66,7 +66,7 @@ public class Renderer : ISubsystem
         graphicsDevice.Clear(VirtualViewport.ClearColor);
 
         // Draw the render target
-        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState, SamplerState, DepthStencilState, RasterizerState);
+        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
         spriteBatch.Draw(VirtualViewport.RenderTarget, VirtualViewport.Destination, VirtualViewport.DrawColor);
         spriteBatch.End();
     }

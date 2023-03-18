@@ -2,6 +2,7 @@ using DefaultEcs;
 using DefaultEcs.System;
 using Disarray.Engine;
 using Disarray.Engine.Components;
+using Disarray.Engine.Util;
 using Microsoft.Xna.Framework;
 
 namespace Disarray.Gameplay;
@@ -27,9 +28,9 @@ public class PlayerSystem : AEntitySetSystem<float>
     private void Move(in Entity entity)
     {
         ref RigidBody rigidBody = ref entity.Get<RigidBody>();
+        ref Player player = ref entity.Get<Player>();
 
         Vector2 direction = Vector2.Zero;
-        int speed = 250;
 
         if (Input.IsActionDown("MoveUp"))
         {
@@ -48,7 +49,7 @@ public class PlayerSystem : AEntitySetSystem<float>
             direction += Vector2.UnitX;
         }
 
-        rigidBody.Velocity = direction * speed;
+        rigidBody.Velocity = direction * player.Speed;
     }
 
     private void CheckExit()

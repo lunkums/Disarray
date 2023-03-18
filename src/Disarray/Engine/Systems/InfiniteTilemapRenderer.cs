@@ -78,17 +78,16 @@ public class InfiniteTilemapRenderer
     {
         var tileLayers = map.Layers.Where(x => x.type == TiledLayerType.TileLayer);
         BoundingFrustum boundingFrustum = main.Camera.GetBoundingFrustum();
-        BoundingBox chunkBoundingBox;
+        BoundingBox chunkBoundingBox = new();
 
         foreach (var layer in tileLayers)
         {
             foreach (var chunk in layer.chunks)
             {
-                chunkBoundingBox = new()
-                {
-                    Min = new(chunk.x * map.TileWidth, chunk.y * map.TileHeight, 0),
-                    Max = new((chunk.x + chunk.width) * map.TileWidth, (chunk.y + chunk.height) * map.TileHeight, 0)
-                };
+                chunkBoundingBox.Min
+                    = new(chunk.x * map.TileWidth, chunk.y * map.TileHeight, 0);
+                chunkBoundingBox.Max
+                    = new((chunk.x + chunk.width) * map.TileWidth, (chunk.y + chunk.height) * map.TileHeight, 0);
 
                 // Don't draw tiles that will be culled anyways
                 if (boundingFrustum.Contains(chunkBoundingBox) == ContainmentType.Disjoint)

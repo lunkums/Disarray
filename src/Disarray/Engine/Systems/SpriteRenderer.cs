@@ -17,7 +17,6 @@ public class SpriteRenderer : AEntitySetSystem<SpriteBatch>
         ref Transform transform = ref entity.Get<Transform>();
         ref Sprite sprite = ref entity.Get<Sprite>();
 
-
         spriteBatch.Draw(sprite.Texture, transform.Position, sprite.SourceRectangle, sprite.Color,
             transform.Rotation, sprite.Origin, transform.Scale, sprite.SpriteEffects, sprite.LayerDepth);
     }

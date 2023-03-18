@@ -3,6 +3,7 @@ using Disarray.Engine;
 using Disarray.Gameplay.Levels;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Runtime;
 
 namespace Disarray;
 
@@ -28,6 +29,9 @@ public class Main : Game
         Screen = new();
         World = new();
         Level = LevelLoader.Create();
+
+        // Stole this from Monocle (Celeste) engine
+        GCSettings.LatencyMode = GCLatencyMode.SustainedLowLatency;
     }
 
     // Engine components and global data

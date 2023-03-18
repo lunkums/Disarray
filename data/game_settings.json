@@ -38,7 +38,7 @@
   },
   "Physics": {
     "MaxFrameTime": 0.25,
-    "FixedDeltaTime": 0.01666666666
+    "FixedDeltaTime": 0.016666
   },
   "Renderer": {
     "BlendState": "NonPremultiplied",
@@ -57,7 +57,7 @@
       "ResizeMethod": "PreserveAspectRatio"
     }
   },
-  "TargetElapsedTime": 0.01666666666,
+  "TargetElapsedTime": 0.0166666,
   "Window": {
     "AllowUserResizing": true,
     "IsBorderlessEXT": false,

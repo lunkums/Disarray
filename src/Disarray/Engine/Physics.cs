@@ -3,7 +3,6 @@ using DefaultEcs.System;
 using Disarray.Engine.Components;
 using Disarray.Engine.Systems;
 using Microsoft.Xna.Framework;
-using System.Diagnostics;
 
 namespace Disarray.Engine;
 
@@ -12,7 +11,7 @@ namespace Disarray.Engine;
 /// </summary>
 public class Physics : ISubsystem
 {
-    private ISystem<float> physicsSystems;
+    private ISystem<float> verletIntegration;
 
     // Tracks the time accumulated during rendering that should be taken up during physics processing
     private float accumulator;
@@ -24,9 +23,7 @@ public class Physics : ISubsystem
 
     public void Initialize(Main game)
     {
-        physicsSystems = new SequentialSystem<float>(
-            new VerletIntegration(game.World, this)
-            );
+        verletIntegration = new VerletIntegration(game.World, this);
 
         // Make sure all entities have a transform
         game.World.SubscribeEntityCreated(AddTransform);
@@ -45,7 +42,7 @@ public class Physics : ISubsystem
 
         while (accumulator >= FixedDeltaTime)
         {
-            physicsSystems.Update(FixedDeltaTime);
+            verletIntegration.Update(FixedDeltaTime);
             accumulator -= FixedDeltaTime;
         }
     }

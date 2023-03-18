@@ -56,11 +56,14 @@ public class Level : ILevel
             Color = Color.White,
             LayerDepth = 0.1f,
             Origin = Vector2.Zero,
-            SourceRectangle = null,
+            SourceRectangle = new Rectangle(0, 16, 16, 16),
             SpriteEffects = SpriteEffects.None,
             Texture = assets.Load<Texture2D>("textures/player")
         });
-        player.Set<Player>(new());
+        player.Set<Player>(new()
+        {
+            Speed = 60
+        });
 
         tilemapRenderer.LoadContent(TilemapDirectory, Tilemap);
         tilemapRenderer.LayerDepth = TilemapLayerDepth;
